@@ -1,4 +1,4 @@
-# Bloxburg - Fast food Worker Cashier Autofarm
+# Bloxburg - Fast Food Worker - Cashier Autofarm
 
 This is an in-game service automation tool that uses TensorFlow to detect on-screen objects, infer the current menu state, and identify the food item plus quantity/size to click. The program then controls mouse input to place the order in the correct sequence.
 
