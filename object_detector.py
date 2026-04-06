@@ -41,7 +41,7 @@ def detect_objects(frame):
     )
 
     valid = int(selected_indices.valid_detections.numpy()[0])
-    print("valid_detections:", valid)
+    print("Valid detections:", valid)
     
     if valid <= 0:
         return []

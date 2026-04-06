@@ -2,8 +2,9 @@ import serving_menu_offset
 import state_menu_offset
 import time
 import autoit
+import input_manager
 
-_DELAY = 0.5 # second(s)
+_DELAY = 0.25 # second(s)
 
 def click_at(x, y, button='left', clicks=1, delay=0.1):
     # Validate coordinates
@@ -98,3 +99,10 @@ def execute_order(GUI_menu: list, main_order: list, side_order: list, drink_orde
     # finish up
     click_state(state_menu, 0)
     time.sleep(1)
+    
+def repeat_order(offset_x=0.5, offset_y=0.97):
+    left, top, width, height = input_manager.get_primary_monitor_bounds()
+    click_x = int(left + width * offset_x)
+    click_y = int(top + height * offset_y)
+    click_at(click_x, click_y)
+    print(f"Repeat order click at: ({click_x}, {click_y})")

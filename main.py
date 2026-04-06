@@ -11,6 +11,10 @@ state = -1 # init int state
 
 GUI_menu = []
 
+timeout = 10
+condition_start_time = None
+
+
 while True:
     frame = input_manager.take_full_screenshot()
     detection_results = object_detector.detect_objects(frame)
@@ -20,6 +24,17 @@ while True:
     
     state = logic.state_detects(detection_results)
     print(f"State detected: {state}")
+
+    repeat_condition = (len(detection_results) == 3 and state == 0)
+    now = time.time()
+    if repeat_condition:
+        if condition_start_time is None:
+            condition_start_time = now
+        elif now - condition_start_time >= timeout:
+            output_manager.repeat_order()
+            condition_start_time = now
+    else:
+        condition_start_time = None
     
     if (
         state == 1 
@@ -55,4 +70,4 @@ while True:
         drink_order.clear()
         print("Completed! Clearing orders.")
     
-    time.sleep(1)
+    time.sleep(0.5)
