@@ -4,6 +4,8 @@ import output_manager
 import logic
 import time
 
+_TIMEOUT = 10
+
 main_order  = []
 side_order  = []
 drink_order = []
@@ -11,9 +13,7 @@ state = -1 # init int state
 
 GUI_menu = []
 
-timeout = 10
-condition_start_time = None
-
+timeout = _TIMEOUT
 
 while True:
     frame = input_manager.take_full_screenshot()
@@ -25,16 +25,21 @@ while True:
     state = logic.state_detects(detection_results)
     print(f"State detected: {state}")
 
-    repeat_condition = (len(detection_results) == 3 and state == 0)
-    now = time.time()
+    repeat_condition = (
+        len(detection_results) <= 3 
+        and len(detection_results) > 0
+        and state == 0
+    )
     if repeat_condition:
-        if condition_start_time is None:
-            condition_start_time = now
-        elif now - condition_start_time >= timeout:
+        if timeout > 0:
+            timeout = timeout - 1
+        else:
+            print("Timeout!")
+            print("Repeating...")
             output_manager.repeat_order()
-            condition_start_time = now
+            timeout = _TIMEOUT
     else:
-        condition_start_time = None
+        timeout = _TIMEOUT
     
     if (
         state == 1 
@@ -70,4 +75,4 @@ while True:
         drink_order.clear()
         print("Completed! Clearing orders.")
     
-    time.sleep(0.5)
+    time.sleep(1)
