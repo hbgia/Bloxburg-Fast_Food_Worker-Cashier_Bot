@@ -6,6 +6,9 @@ import input_manager
 
 _DELAY = 0.25 # second(s)
 
+def press_key(key: str):
+    autoit.send(key)
+
 def click_at(x, y, button='left', clicks=1, delay=0.1):
     # Validate coordinates
     if not isinstance(x, int) or not isinstance(y, int):
