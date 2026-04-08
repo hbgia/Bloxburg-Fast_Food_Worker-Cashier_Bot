@@ -5,6 +5,7 @@ import logic
 import time
 
 _TIMEOUT = 10
+_WAIT_EACH_ORDER = 2
 
 main_order  = []
 side_order  = []
@@ -14,6 +15,7 @@ state = -1 # init int state
 GUI_menu = []
 
 timeout = _TIMEOUT
+wait_each_order = _WAIT_EACH_ORDER
 
 while True:
     frame = input_manager.take_full_screenshot()
@@ -27,7 +29,6 @@ while True:
 
     repeat_condition = (
         len(detection_results) <= 3 
-        and len(detection_results) > 0
         and state == 0
     )
     if repeat_condition:
@@ -36,6 +37,7 @@ while True:
         else:
             print("Timeout!")
             print("Repeating...")
+            output_manager.press_key("e")
             output_manager.repeat_order()
             timeout = _TIMEOUT
     else:
@@ -47,6 +49,7 @@ while True:
     ): # if main state and main_order is empty
         main_order = logic.process_order_on_state(frame, detection_results, state)
         print(f"Main order collected: {main_order}")
+        wait_each_order = _WAIT_EACH_ORDER
         
     elif (
         state == 2 
@@ -54,6 +57,7 @@ while True:
     ): # same as above
         side_order = logic.process_order_on_state(frame, detection_results, state)
         print(f"Side order collected: {side_order}")
+        wait_each_order = _WAIT_EACH_ORDER
         
     elif (
         state == 3 
@@ -61,18 +65,23 @@ while True:
     ):
         drink_order = logic.process_order_on_state(frame, detection_results, state)
         print(f"Drink order collected: {drink_order}")
-        
+        wait_each_order = _WAIT_EACH_ORDER
+    
     elif (
         state == 0
         and GUI_menu
         and main_order
         and side_order
     ):
-        print("Executing...")
-        output_manager.execute_order(GUI_menu, main_order, side_order, drink_order)
-        main_order.clear()
-        side_order.clear()
-        drink_order.clear()
-        print("Completed! Clearing orders.")
-    
+        if (wait_each_order > 0):
+            wait_each_order = wait_each_order - 1
+        else:
+            print("Executing...")
+            output_manager.execute_order(GUI_menu, main_order, side_order, drink_order)
+            main_order.clear()
+            side_order.clear()
+            drink_order.clear()
+            print("Completed! Clearing orders.")
+            wait_each_order = _WAIT_EACH_ORDER
+
     time.sleep(1)
