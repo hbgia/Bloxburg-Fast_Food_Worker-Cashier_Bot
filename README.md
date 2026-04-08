@@ -17,13 +17,24 @@ The main loop lives in `main.py`:
 > ```powershell
 > python -m venv .venv
 > ```
+> Activate virtual environment
+> ```powershell
+> .venv/Scripts/Activate.ps1
+> ```
+> If Windows blocks `.ps1` scripts, run this first in the same PowerShell window and then try again:
+> ```powershell
+> Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+> .venv/Scripts/Activate.ps1
+> ```
+> **Note**: You can use another virtual environment if you want (for example: conda)
+
 **1.** Install the dependencies from `requirements.txt`.
 > ```powershell
 > pip install -r requirements.txt
 > ```
 > **Note**: This program was built in Python 3.11.9 so its dependencies were installed appropriately for that version. If installing fails, please try again with the mentioned Python version.
 
- **2.** Run the program with:
+**2.** Run the program with:
 
 > ```powershell
 > python main.py
@@ -32,10 +43,10 @@ The main loop lives in `main.py`:
 **3.** Wait for the system to finish loading before starting.
 > Start your work session only after the program is ready to monitor the screen. (Seeing "State detected: 0" in terminal means it's ready).
 
-**5.** Ensure stability.
+**4.** Ensure stability.
 > While the game is running, try to keep the Roblox window in full-screen so the system can read the screen and click accurately. Do not touch your desktop during operation.
 
-**6.** Stop when you have earned enough.
+**5.** Stop when you have earned enough.
 > To stop, simply jump out of the cashier position. Then switch to the terminal running the program and press Ctrl + C (or simply just close the terminal).  
 
 ## Requirements
@@ -55,6 +66,7 @@ The main loop lives in `main.py`:
 
 ## Notes
 
+- This program currently only works on Windows.
 - This program is made specificaly for Bloxburg Fast Food Worker Cashier job only.
 - If the menu or UI is blocked or resized, the program may detect the wrong state or click the wrong position.
 - This is a screen-vision-based automation tool, so stability depends heavily on display quality and the game window position.
