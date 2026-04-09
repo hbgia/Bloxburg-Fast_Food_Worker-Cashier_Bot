@@ -27,6 +27,17 @@ def take_full_screenshot():
 
         # mss returns BGRA → convert to BGR
         return cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
+
+
+def get_primary_monitor_bounds():
+    with mss.mss() as sct:
+        monitor = _get_primary_monitor(sct)
+        return (
+            int(monitor["left"]),
+            int(monitor["top"]),
+            int(monitor["width"]),
+            int(monitor["height"]),
+        )
     
 def take_screen_region(x1, y1, x2, y2):
     width = int(x2 - x1)
