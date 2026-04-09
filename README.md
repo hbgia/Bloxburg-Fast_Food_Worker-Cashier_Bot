@@ -68,7 +68,7 @@ The main loop lives in `main.py`:
 
 - This program currently only works on Windows.
 - This program is made specificaly for Bloxburg Fast Food Worker Cashier job only.
-- This program currently only scan and click on your **PRIMARY MONITOR**.
+- This program currently only scan and click on your **PRIMARY MONITOR** (You can change primary monitor in Window settings).
 - If the menu or UI is blocked or resized, the program may detect the wrong state or click the wrong position.
 - This is a screen-vision-based automation tool, so stability depends heavily on display quality and the game window position.
 - This program performs better when you have a GPU.
